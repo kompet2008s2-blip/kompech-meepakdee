@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Banphai School (BETA)</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* page styling */
+    .proj-page{ max-width:1180px; margin:110px auto 60px; padding:0 20px; color:#fff; }
+    .back-btn{ position:fixed; top:18px; left:18px; z-index:10; 
+      padding:10px 14px; border-radius:12px; text-decoration:none; color:#fff;
+      background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); backdrop-filter: blur(10px);
+    }
+    .hero{ display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center; }
+    @media (max-width: 960px){ .hero{ grid-template-columns:1fr; } }
+    .title{ font-size:3rem; font-weight:900; letter-spacing:.4px; margin:10px 0 6px; text-shadow:0 0 28px #00f0ff44; }
+    .lede{ opacity:.95; line-height:1.7; }
+    .chips{ display:flex; flex-wrap:wrap; gap:10px; margin:18px 0; }
+    .chip{ padding:8px 12px; border-radius:12px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); }
+    .cta{ display:flex; gap:12px; margin-top:18px; }
+    .btn{ display:inline-block; padding:10px 16px; border-radius:12px; text-decoration:none; font-weight:800; }
+    .btn-primary{ color:#001622; background:linear-gradient(135deg,#00f0ff,#9ffcff); }
+    .btn-ghost{ color:#fff; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); }
+
+    .shot{ border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.18); background:#0b0c10; }
+    .shot img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .sections{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:28px; }
+    @media (max-width: 960px){ .sections{ grid-template-columns:1fr; } }
+    .panel{ padding:18px; border-radius:18px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.2); }
+    .panel h3{ font-size:1.6rem; margin:2px 0 12px; }
+    .panel ul{ margin-left:18px; line-height:1.7; }
+  </style>
+</head>
+<body>
+  <a class="back-btn" href="index.html">← Back</a>
+
+  <main class="proj-page">
+    <section class="hero">
+      <div>
+        <h1 class="title">Project Banphai school on Roblox — <span style="opacity:.8">BETA</span></h1>
+        <p class="lede">
+          โปรเจกต์สร้างฉากและระบบเกมภายใน Roblox จำลองโรงเรียนบ้านไผ่
+          มุ่งเน้นความสมจริงตามสเกล สภาพแวดล้อม และการใช้งานพื้นที่ต่าง ๆ
+          ปัจจุบันอยู่ระหว่าง BETA TEST
+        </p>
+
+        <div class="chips">
+          <span class="chip">Roblox</span>
+          <span class="chip">Roblox Studio</span>
+          <span class="chip">Lua</span>
+        </div>
+
+        <div class="cta">
+          <!-- ใส่ลิงก์เกมจริงตรง href -->
+          <a class="btn btn-primary" href="https://www.roblox.com/games/108891054191563/KK5-Project" target="_blank" rel="noopener">Play Test BETA</a>
+        </div>
+      </div>
+
+      <div class="shot">
+        <img src="img/Screenshot 2025-07-07 034745.png" alt="Preview">
+      </div>
+    </section>
+
+    <section class="sections">
+      <div class="panel">
+        <h3>ฟังก์ชัน</h3>
+        <ul>
+          <li><b>Time system</b> — ระบบเวลาภายในเกมสัมพันธ์กับกิจกรรม/สภาพแสง</li>
+          <li><b>Hungry/Thirsty</b> — สเตตัสความหิว/กระหาย ส่งผลต่อการเล่น</li>
+          <li><b>Bike spawn</b> — จุดเกิดจักรยานและการเก็บข้อมูลผ่าน server storage</li>
+          <li><b>Nametag</b> — ป้ายชื่อผู้เล่นพร้อม role (Owner/Dev/Admin/Member)</li>
+          <li><b>Workspace layout</b> — โครงสร้างงานแบ่งชัดเจนเพื่อการดูแลระยะยาว</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>ภาพตัวอย่าง</h3>
+        <div class="shot" style="margin-bottom:12px;"><img src="img/Screenshot 2025-09-03 214908.png" alt=""></div>
+        <div class="shot"><img src="img/Screenshot 2025-07-07 035615.png" alt=""></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

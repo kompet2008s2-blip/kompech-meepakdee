@@ -1,0 +1,803 @@
+/* ===== Intro Section ===== */
+.intro-container {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 48px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  padding: 48px 24px 24px 24px;
+  animation: introFadeIn 1.2s cubic-bezier(.4,1.4,.6,1) both;
+}
+
+.intro-img-wrapper {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0,240,255,0.18), 0 1.5px 8px rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: introImgPop 1.1s cubic-bezier(.4,1.4,.6,1) 0.2s both;
+}
+
+.intro-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  filter: brightness(1) drop-shadow(0 0 12px #00f0ff44);
+  opacity: 0;
+  animation: introImgFade 0.8s 0.5s both;
+}
+
+.intro-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+}
+
+.intro-name {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #00f0ff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 16px #00f0ff33, 0 0 24px #00f0ff99;
+  line-height: 1.1;
+  margin-bottom: 0.2em;
+  opacity: 0;
+  animation: introTextFade 0.7s 0.7s both;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.04em;
+  position: relative;
+}
+
+.intro-name .char {
+  opacity: 0;
+  display: inline-block;
+  animation: nameType 0.04s linear forwards;
+}
+
+.intro-name .char.glow {
+  animation: nameGlow 1.2s cubic-bezier(.4,1.4,.6,1) infinite alternate;
+  filter: drop-shadow(0 0 8px #00f0ff) brightness(1.3);
+}
+
+@keyframes nameType {
+  from { opacity: 0; transform: translateY(16px) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nameGlow {
+  0% { filter: drop-shadow(0 0 0px #00f0ff) brightness(1); }
+  60% { filter: drop-shadow(0 0 16px #00f0ff) brightness(1.5); }
+  100% { filter: drop-shadow(0 0 0px #00f0ff) brightness(1); }
+  position: relative;
+}
+.intro-img {
+  position: relative;
+  z-index: 3;
+}
+
+.intro-desc {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #fff;
+  opacity: 0.85;
+  letter-spacing: 0.2px;
+  margin-top: 0.1em;
+  opacity: 0;
+  animation: introTextFade 0.7s 1.1s both;
+}
+
+@keyframes introFadeIn {
+  0% { opacity: 0; transform: translateY(40px) scale(0.98); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes introImgPop {
+  0% { transform: scale(0.7); opacity: 0; }
+  80% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes introImgFade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes introTextFade {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: none; }
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-y: auto;
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0b0c10);
+  background-size: cover; /* หรือเอาออกเลยก็ได้ */
+  /* ลบ animation ทิ้ง */
+  scroll-behavior: smooth;
+}
+
+
+
+/* Overlay Background */
+#overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top left, rgba(255,255,255,0.5), rgba(200,255,255,0.3)), url('your-background.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  z-index: 10;
+  transition: opacity 1s ease;
+  border-radius: 0 0 50% 50% / 10% 10% 30% 30%;
+}
+
+#overlay.hidden {
+  pointer-events: none;
+}
+
+#welcome-text {
+  font-size: 3em;
+  color: #ffffff;
+  text-shadow: 0 0 10px #00f0ff;
+  filter: blur(10px);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: filter 1s ease, transform 1s ease, opacity 1s ease;
+}
+
+#welcome-text.visible {
+  filter: blur(0px);
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Main Content */
+#main-content {
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 1200px;
+  padding: 15px 30px;
+  z-index: 1000;
+
+  /* ✅ Glassmorphism core */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* ✅ Border ใสเบา ๆ */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* ✅ ขอบโค้งด้านล่าง */
+  border-radius: 0 0 40px 40px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+nav ul li {
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255,255,255,0.4);
+  transform: scale(1.1);
+}
+
+/* Section Styling with Aero Gradients */
+section {
+  padding: 100px 20px;
+  margin: 60px 40px;
+  min-height: 100vh;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+section#welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+  min-height: unset;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+/* เฉพาะ section#home ให้มี bg glassmorphism ครอบ intro-container เท่านั้น */
+section#home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+.intro-container {
+  background: rgba(255,255,255,0.13);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 32px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  padding: 40px 48px;
+  margin: 48px 0 0 0;
+  max-width: 900px;
+}
+.intro-img-wrapper {
+  width: 200px;
+  height: 200px;
+}
+
+
+.certificate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+  justify-items: center;
+}
+
+.certificate-card {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  background: #181616;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  
+}
+
+
+
+.card-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image .img-hover-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  filter: blur(0px);
+  z-index: 2;
+}
+
+.card-image .img-hover-text {
+  color: #fff;
+  font-size: 1.1rem;
+  background: rgba(0,0,0,0.4);
+  padding: 8px 18px;
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  z-index: 3;
+}
+
+.certificate-card:hover .card-image img {
+  filter: blur(2px) brightness(0.7);
+  transition: filter 0.3s;
+}
+.certificate-card:hover .img-hover-overlay {
+  opacity: 1;
+  filter: blur(1.5px);
+}
+.certificate-card:hover .img-hover-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-text {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.card-text h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.card-text p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+
+
+
+
+.full-pic-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #0b30ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.full-pic-btn:hover {
+  background-color: #5fa1b7;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 140, 186, 0.4);
+  
+}
+
+
+
+
+#full-pic-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#full-pic-viewer.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.viewer-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: zoom-out;
+}
+
+#full-pic-img {
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 2;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.cick-btn{
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #0b30ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cick-btn:hover{
+  background-color: #874592;
+}
+
+.certificate-card {
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.full-pic-btn {
+  position: relative;
+  z-index: 11;
+  cursor: pointer;
+}
+
+/* ตรวจ bubble หรือ overlay ถ้ายังอยู่ */
+.bubbles {
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* ถ้าปุ่มถูก cover ให้ disable การคลิกที่ bubbles */
+}
+
+#overlay {
+  z-index: 5;
+}
+
+#full-pic-viewer {
+  z-index: 100;
+}
+/* Popup Certificate */
+.cert-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.cert-popup img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.cert-popup .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cert-popup .close-btn:hover {
+  background: rgba(255,255,255,0.4);
+}
+
+/* Animation สำหรับ Popup */
+@keyframes popupFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popupFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* ปรับ popup ให้ใช้ animation ตอนเปิด */
+.cert-popup.show {
+  display: flex;
+  animation: popupFadeIn 0.3s ease forwards;
+}
+.cert-popup.hide {
+  animation: popupFadeOut 0.3s ease forwards;
+}
+
+/* ขนาดการ์ดกำลังดี */
+.work-cards{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:20px;
+  margin-top:14px;
+}
+.work-card{
+  border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,.13);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.work-card:hover{ transform: translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,.26); }
+.work-card__img{ aspect-ratio: 16/9; overflow:hidden; }
+.work-card__img img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease, filter .3s ease; }
+.work-card:hover .work-card__img img{ transform:scale(1.05); filter:brightness(.96); }
+.work-card__body{ padding:12px 14px 14px; color:#fff; }
+.work-card__title{ font-size:1.1rem; font-weight:800; text-shadow:0 0 14px #00f0ff33; margin:2px 0 6px; }
+.work-card__desc{ font-size:.92rem; opacity:.9; line-height:1.4; }
+.work-card__btn{
+  margin-top:10px; padding:8px 14px; border:none; border-radius:12px; cursor:pointer;
+  color:#001622; font-weight:700; letter-spacing:.3px;
+  background:linear-gradient(135deg,#00f0ff,#9ffcff);
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.work-card__btn:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,240,255,.35); }
+
+/* popup thumbs ให้เรียง 2 คอลัมน์ในจอเล็ก */
+.proj-popup__thumbs{ display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin-top:12px; }
+@media (min-width: 980px){
+  .proj-popup__thumbs{ grid-template-columns: repeat(3,1fr); }
+}
+.proj-popup__thumbs img{ width:100%; aspect-ratio: 16/9; object-fit:cover; border-radius:12px; border:1px solid rgba(255,255,255,.18); cursor:pointer; }
+/* ===== Popup (My work) — glass/neon เข้าธีมเดิม ===== */
+.proj-popup{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+  z-index:3500;
+}
+.proj-popup.show{ display:flex; }
+.proj-popup__overlay{
+  position:absolute; inset:0; background:rgba(0,0,0,.72); backdrop-filter: blur(2px);
+}
+.proj-popup__panel{
+  position:relative; color:#fff;
+  width:min(1100px,92vw); max-height:86vh; overflow:auto;
+  border-radius:26px; padding:26px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+
+  /* แอนิเมชัน “กางจากซ้าย-ขวา” แบบเบา (transform-only) */
+  transform-origin:center;
+  transform: scaleX(.6);
+  opacity:0;
+  animation: panelIn .26s ease both;
+}
+.proj-popup.closing .proj-popup__panel{ animation: panelOut .2s ease both; }
+@keyframes panelIn { from{transform:scaleX(.6);opacity:0} to{transform:scaleX(1);opacity:1} }
+@keyframes panelOut{ from{transform:scaleX(1);opacity:1} to{transform:scaleX(.6);opacity:0} }
+
+.proj-popup__close{
+  position:absolute; top:14px; right:16px;
+  width:44px; height:44px; border-radius:50%;
+  border:none; cursor:pointer; font-size:1.6rem; line-height:1; color:#fff;
+  background:rgba(255,255,255,.18);
+  transition: background .2s ease, transform .1s ease; z-index:2;
+}
+.proj-popup__close:hover{ background:rgba(255,255,255,.32); transform: scale(1.04); }
+
+.proj-popup__grid{ display:grid; grid-template-columns: 1.15fr .85fr; gap:24px; }
+@media (max-width: 900px){ .proj-popup__grid{ grid-template-columns:1fr; gap:16px; } }
+
+.proj-popup__hero{
+  border-radius:18px; overflow:hidden; background:#0b0c10;
+  border:1px solid rgba(255,255,255,.18);
+}
+.proj-popup__hero img{ width:100%; height:100%; object-fit:cover; display:block; cursor: zoom-in; }
+
+.proj-popup__title{
+  font-size:2.0rem; font-weight:900; letter-spacing:.6px; margin:4px 0 10px;
+  text-shadow:0 0 22px #00f0ff55;
+}
+.proj-popup__text{ columns: 2 240px; column-gap: 24px; line-height:1.6; }
+
+/* (คุณมี .proj-popup__thumbs อยู่แล้ว ถ้าไม่มีให้คงไว้ตามไฟล์เดิม) */
+
+/* ===== My work: project cards (link to pages) ===== */
+.proj-cards{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:20px;
+  margin-top:14px;
+}
+.proj-card{
+  border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,.13);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.proj-card:hover{ transform: translateY(-3px); box-shadow:0 14px 30px rgba(0,0,0,.26); }
+
+.proj-card__img{ position:relative; aspect-ratio: 16/9; overflow:hidden; }
+.proj-card__img img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .55s ease, filter .3s ease; }
+.proj-card:hover .proj-card__img img{ transform:scale(1.05); filter:brightness(.96); }
+
+/* brand logo bottom-right */
+.brand-badge{
+  position:absolute; right:10px; bottom:10px;
+  width:40px; height:40px; display:grid; place-items:center;
+  background: rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.3);
+  transform: scale(.85);
+  transition: transform .22s ease, background .2s ease, box-shadow .2s ease;
+  overflow: visible;
+}
+.brand-badge__rotor{ width:70%; height:70%; display:block; }
+.proj-card:hover .brand-badge{
+  transform: scale(1);
+  background: rgba(0,0,0,.55);
+  box-shadow: 0 10px 22px rgba(0,0,0,.45);
+}
+/* หมุนเฉพาะไอคอนข้างใน (แยกจาก scale) */
+@keyframes spin360 { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+.proj-card:hover .brand-badge__rotor{
+  animation: spin360 1.2s linear infinite;
+}
+
+/* body */
+.proj-card__body{ padding:12px 14px 16px; color:#fff; }
+.proj-card__title{ font-size:1.12rem; font-weight:800; margin:2px 0 6px; text-shadow:0 0 14px #00f0ff33; }
+.proj-card__desc{ font-size:.94rem; opacity:.92; line-height:1.45; }
+.proj-card__btn{
+  margin-top:10px; padding:8px 14px; border:none; border-radius:12px;
+  display:inline-block; text-decoration:none; cursor:pointer;
+  color:#001622; font-weight:700; letter-spacing:.3px;
+  background:linear-gradient(135deg,#00f0ff,#9ffcff);
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.proj-card__btn:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,240,255,.35); }
+/* ===== Contact (glass / neon theme) ===== */
+:root{
+  --c-cyan:#00f0ff;
+  --c-cyan-soft:#9ffcff;
+  --glass-bg:rgba(255,255,255,.14);
+  --glass-brd:rgba(255,255,255,.28);
+}
+
+#contact { color:#fff; }
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:18px;
+}
+
+.contact-card{
+  position:relative; overflow:hidden;
+  border-radius:22px;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-brd);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:0 12px 28px rgba(0,0,0,.22);
+  padding:16px 16px 14px;
+  display:grid; grid-template-columns:auto 1fr; gap:12px 12px; align-items:center;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.contact-card::after{
+  content:""; position:absolute; inset:-2px;
+  background: radial-gradient(600px 120px at 80% 120%, rgba(0,240,255,.12), transparent 60%);
+  pointer-events:none;
+}
+.contact-card:hover{
+  transform: translateY(-3px);
+  box-shadow:0 18px 34px rgba(0,0,0,.28);
+  border-color: rgba(255,255,255,.38);
+}
+
+.contact-icon{
+  width:54px; height:54px; border-radius:16px;
+  display:grid; place-items:center;
+  background:linear-gradient(135deg, var(--c-cyan), var(--c-cyan-soft));
+  box-shadow:0 0 24px #00f0ff44;
+}
+.contact-icon svg{ width:26px; height:26px; fill:#001622; }
+
+.contact-info{ align-self:center; }
+.contact-label{ font-weight:800; letter-spacing:.4px; opacity:.95; text-shadow:0 0 14px #00f0ff33; }
+.contact-value{ font-size:.98rem; opacity:.9; margin-top:2px; }
+
+.contact-actions{
+  grid-column:1 / -1;
+  margin-top:6px;
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+
+.contact-btn{
+  appearance:none; border:none; cursor:pointer;
+  padding:9px 14px; border-radius:12px; font-weight:800; letter-spacing:.3px;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease, background .2s ease;
+  text-decoration:none; display:inline-flex; align-items:center; justify-content:center; color:#001622;
+}
+.contact-btn.primary{
+  background:linear-gradient(135deg, var(--c-cyan), var(--c-cyan-soft));
+  box-shadow:0 10px 22px rgba(0,240,255,.35);
+}
+.contact-btn.primary:hover{ transform:translateY(-1px); }
+.contact-btn.ghost{
+  background:rgba(255,255,255,.16);
+  color:#fff; border:1px solid rgba(255,255,255,.25);
+}
+.contact-btn.ghost:hover{ filter:brightness(1.1); transform:translateY(-1px); }
+
+/* โลโก้มุมขวาล่างบนรูปเวลา hover (optional, เผื่อเอาไปใช้กับการ์ดอื่น) */
+.work-card__img{ position:relative; }
+.work-card__img .corner-logo{
+  position:absolute; right:10px; bottom:10px; width:28px; height:28px; opacity:.9;
+  transform: scale(1) rotate(0deg);
+  transition: transform .35s ease;
+}
+.work-card:hover .corner-logo{ transform: scale(1.15) rotate(8deg); }

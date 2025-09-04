@@ -801,3 +801,73 @@ section#home {
   transition: transform .35s ease;
 }
 .work-card:hover .corner-logo{ transform: scale(1.15) rotate(8deg); }
+/* =========================
+   Mobile & Tablet Enhancements
+   วางท้ายไฟล์ styles.css
+   ========================= */
+
+/* กัน header (fixed) บังเวลาเลื่อนลิงก์ไปยัง #id */
+section { scroll-margin-top: 90px; }
+
+/* แท็บเล็ตลงไป: ผ่อน padding/margin ของแต่ละ section */
+@media (max-width: 1024px) {
+  header { width: 100%; padding: 12px 18px; }
+  section {
+    padding: 72px 16px;
+    margin: 40px 16px;
+    min-height: auto; /* เลี่ยง 100vh บนมือถือที่มีแถบระบบ */
+  }
+  .proj-popup__text { columns: 1 280px; } /* เนื้อหาอ่านง่ายขึ้น */
+}
+
+/* มือถือ (<= 768px) */
+@media (max-width: 768px) {
+  /* เมนูบนสุดให้เลื่อนข้างได้ */
+  nav ul {
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+  nav ul li { margin: 0 6px; }
+  nav ul li a { font-size: 0.95rem; padding: 6px 10px; }
+
+  /* Intro เรียงแนวตั้ง + ลดขนาด */
+  .intro-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    padding: 28px 18px;
+    margin: 24px 12px 0;
+    max-width: 560px;
+  }
+  .intro-img-wrapper { width: 140px; height: 140px; }
+  .intro-name { font-size: 1.6rem; }
+  .intro-desc { font-size: 1rem; }
+
+  /* การ์ดต่าง ๆ ให้ปรับคอลัมน์อัตโนมัติ */
+  .work-cards { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+  .proj-cards { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+  .certificate-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+
+  /* Popup โปรเจกต์ → คอลัมน์เดียว */
+  .proj-popup__panel { width: min(960px, 96vw); padding: 16px; }
+  .proj-popup__grid { grid-template-columns: 1fr; gap: 14px; }
+  .proj-popup__text { columns: 1; line-height: 1.65; }
+  .proj-popup__hero img { height: auto; }
+}
+
+/* มือถือเล็ก (<= 480px) */
+@media (max-width: 480px) {
+  #welcome-text { font-size: 2rem; }
+  .intro-img-wrapper { width: 120px; height: 120px; }
+  .intro-name { font-size: 1.35rem; }
+  section { margin: 24px 10px; padding: 48px 12px; }
+
+  /* ปุ่มต่าง ๆ จิ้มง่ายขึ้น */
+  .work-card__btn,
+  .proj-card__btn { padding: 10px 14px; font-size: 0.95rem; }
+}

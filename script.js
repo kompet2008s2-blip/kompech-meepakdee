@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2 ใบถัดไป: extra 2 รูป
     p3: {
       title: "ได้รับรางวัลรองชนะเลิศอันดับ2 การแข่งขัน Generative AI:Prompt Engineering ",
-      images: ["img/IMG_1680.jpg","img/IMG_1680.jpg","img/Aigenre.jpg"],
+      images: ["img/GIA.png","img/GIA.png","img/Aigenre.jpg"],
       desc: `สิ่งที่ประทับใจในการแข่งขันนี้คือได้รับประสบการณ์ ความรู้
 ความรู้:ผมได้รับความรู้ด้านAI โดยมี การใช้AIแก้โค้ดที่ผิดพลาด การใช้AIสร้างภาพที่ต้องการ การใช้AIสร้างAI
 ประสบการณ์: ประสบการณ์การแข่งขันครั้งนี้ทำให้ผมได้ฝึกฝนตัวเองก่อนการแข่งขัน ในการแข่งขันผมได้หาวิธีการทำงานของโค้ดPythonโดยมีinputกับoutputให้ ผมได้สร้างภาพจากAIให้เหมือนภาพต้นฉบับมากที่สุดและผมสามารถทำได้สูงสุด96% และได้ใช้AIในการซ่อมแซมโค้ดของModel AI ซ่อมแซมpixel ของภาพ`
@@ -234,3 +234,4 @@ document.addEventListener('DOMContentLoaded', () => {
   ppCloseBtn?.addEventListener("click", closeProject);
   document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeProject(); });
 });
+
